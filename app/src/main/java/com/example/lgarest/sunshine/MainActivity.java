@@ -1,7 +1,12 @@
 package com.example.lgarest.sunshine;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -31,9 +36,34 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
+        } else if (id == R.id.action_display_location) {
+            openPreferredLocationInMap();
         }
 
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openPreferredLocationInMap(){
+        SharedPreferences sharedprefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String location = sharedprefs.getString(
+                getString(R.string.pref_location_key),
+                getString(R.string.pref_location_default));
+
+        // building of the Google Maps Intent Uri containing the location
+        Uri gmIntentUri = Uri.parse("geo:0,0?").buildUpon()
+                .appendQueryParameter("q", location).build();
+
+        // mapIntent will start the maps Activity
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW);
+        mapIntent.setData(gmIntentUri);
+        if (mapIntent.resolveActivity(getPackageManager()) != null){
+            startActivity(mapIntent);
+        } else {
+            Log.d("openPreferredLocation", "Couldn't call " + location + " no maps installed!");
+        }
+        // mapIntent.setPackage("com.google.android.apps.maps");
     }
 }
