@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
+    private String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +35,9 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        // check wich option has been selected
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
-            return true;
         } else if (id == R.id.action_display_location) {
             openPreferredLocationInMap();
         }
@@ -47,6 +47,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void openPreferredLocationInMap(){
+        // get the saved settings
         SharedPreferences sharedprefs = PreferenceManager.getDefaultSharedPreferences(this);
         String location = sharedprefs.getString(
                 getString(R.string.pref_location_key),
@@ -62,8 +63,7 @@ public class MainActivity extends ActionBarActivity {
         if (mapIntent.resolveActivity(getPackageManager()) != null){
             startActivity(mapIntent);
         } else {
-            Log.d("openPreferredLocation", "Couldn't call " + location + " no maps installed!");
+            Log.d(LOG_TAG, "Couldn't call " + location + " no map app installed!");
         }
-        // mapIntent.setPackage("com.google.android.apps.maps");
     }
 }

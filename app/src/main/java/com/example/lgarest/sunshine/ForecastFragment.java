@@ -32,8 +32,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 /**
@@ -67,8 +65,8 @@ public class ForecastFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_forecast, container, false);
 
-        // Binds the forecast data, the list_item_forecast layout and the
-        //   list_item_forecast_textview
+        /* Binds the forecast data, the list_item_forecast layout and the
+           list_item_forecast_textview */
         forecastAdapter= new ArrayAdapter<String>(
                 // pass the context of the activity
                 getActivity(),
