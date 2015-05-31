@@ -13,13 +13,20 @@ import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity {
     private String LOG_TAG = MainActivity.class.getSimpleName();
+    private final String FORECASTFRAGMENT_TAG = "FFTAG";
+    private String mLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mLocation = Utility.getPreferredLocation(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState == null){
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id., new ForecastFragment(), FORECASTFRAGMENT_TAG)
+//                    .commit();
+        }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -44,6 +51,12 @@ public class MainActivity extends ActionBarActivity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void openPreferredLocationInMap(){
